@@ -1,4 +1,8 @@
+"use client"
+
+import Link from "next/link"
 import { ArrowRight } from "lucide-react"
+import { ChangeEvent, FormEvent, useState } from "react"
 
 const offices = [
   {
@@ -26,6 +30,55 @@ const offices = [
 const languages = ["Spanish", "English", "French", "German"]
 
 export default function ContactPage() {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    area: "Select Area of Law",
+    office: "Madrid",
+    source: "Google Search",
+    message: "",
+    consent: false,
+  })
+
+  const handleChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = event.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({ ...prev, consent: event.target.checked }))
+  }
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    setIsSubmitting(true)
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+
+      if (!response.ok) {
+        throw new Error("Failed to send")
+      }
+
+      setIsSubmitted(true)
+    } catch (error) {
+      alert("Something went wrong. Please try again.")
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
   return (
     <main className="bg-[#080808]">
       <section className="flex min-h-[50vh] items-center py-16 lg:py-24">
@@ -83,97 +136,149 @@ export default function ContactPage() {
           </aside>
 
           <section className="border border-white/5 bg-[#111111] p-8 lg:col-span-3 lg:p-10">
-            <h2 className="font-serif text-3xl text-[#F5F5F0]">Send Us a Message</h2>
-            <p className="mt-3 text-[#888880]">All information is treated with absolute confidentiality.</p>
-
-            <form className="mt-8 space-y-6">
-              <div>
-                <label className="mb-2 block text-xs tracking-[0.24em] text-[#C9A84C]">FULL NAME</label>
-                <input
-                  type="text"
-                  className="w-full rounded-sm border border-white/10 bg-[#1A1A1A] px-4 py-3 text-[#F5F5F0] outline-none transition-all duration-300 ease-in-out placeholder:text-[#888880] focus:border-[#C9A84C]"
-                  placeholder="Your full name"
-                />
+            {isSubmitted ? (
+              <div className="flex min-h-[420px] flex-col items-center justify-center border border-white/5 bg-[#111111] p-8 text-center">
+                <span className="text-5xl text-[#C9A84C]">✓</span>
+                <h2 className="mt-6 font-serif text-3xl text-[#F5F5F0]">Enquiry Received</h2>
+                <p className="mt-4 max-w-xl text-[#888880]">
+                  Thank you for contacting Lexara Law. A senior attorney will be in touch within 24 hours.
+                </p>
+                <Link
+                  href="/"
+                  className="mt-8 inline-flex items-center bg-[#C9A84C] px-6 py-3 text-sm tracking-[0.15em] text-black transition-all duration-300 ease-in-out hover:bg-[#b6953f]"
+                >
+                  Return to Homepage
+                </Link>
               </div>
+            ) : (
+              <>
+                <h2 className="font-serif text-3xl text-[#F5F5F0]">Send Us a Message</h2>
+                <p className="mt-3 text-[#888880]">All information is treated with absolute confidentiality.</p>
 
-              <div className="grid gap-6 md:grid-cols-2">
-                <div>
-                  <label className="mb-2 block text-xs tracking-[0.24em] text-[#C9A84C]">EMAIL ADDRESS</label>
-                  <input
-                    type="email"
-                    className="w-full rounded-sm border border-white/10 bg-[#1A1A1A] px-4 py-3 text-[#F5F5F0] outline-none transition-all duration-300 ease-in-out placeholder:text-[#888880] focus:border-[#C9A84C]"
-                    placeholder="name@example.com"
-                  />
-                </div>
-                <div>
-                  <label className="mb-2 block text-xs tracking-[0.24em] text-[#C9A84C]">PHONE NUMBER</label>
-                  <input
-                    type="tel"
-                    className="w-full rounded-sm border border-white/10 bg-[#1A1A1A] px-4 py-3 text-[#F5F5F0] outline-none transition-all duration-300 ease-in-out placeholder:text-[#888880] focus:border-[#C9A84C]"
-                    placeholder="+34 ..."
-                  />
-                </div>
-              </div>
+                <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+                  <div>
+                    <label className="mb-2 block text-xs tracking-[0.24em] text-[#C9A84C]">FULL NAME</label>
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      className="w-full rounded-sm border border-white/10 bg-[#1A1A1A] px-4 py-3 text-[#F5F5F0] outline-none transition-all duration-300 ease-in-out placeholder:text-[#888880] focus:border-[#C9A84C]"
+                      placeholder="Your full name"
+                    />
+                  </div>
 
-              <div>
-                <label className="mb-2 block text-xs tracking-[0.24em] text-[#C9A84C]">AREA OF LAW</label>
-                <select className="w-full rounded-sm border border-white/10 bg-[#1A1A1A] px-4 py-3 text-[#F5F5F0] outline-none transition-all duration-300 ease-in-out focus:border-[#C9A84C]">
-                  <option>Select Area of Law</option>
-                  <option>Corporate Law</option>
-                  <option>Employment Law</option>
-                  <option>Real Estate Law</option>
-                  <option>Civil Litigation</option>
-                  <option>Family Law</option>
-                  <option>Immigration Law</option>
-                  <option>Other Matter</option>
-                </select>
-              </div>
+                  <div className="grid gap-6 md:grid-cols-2">
+                    <div>
+                      <label className="mb-2 block text-xs tracking-[0.24em] text-[#C9A84C]">EMAIL ADDRESS</label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className="w-full rounded-sm border border-white/10 bg-[#1A1A1A] px-4 py-3 text-[#F5F5F0] outline-none transition-all duration-300 ease-in-out placeholder:text-[#888880] focus:border-[#C9A84C]"
+                        placeholder="name@example.com"
+                      />
+                    </div>
+                    <div>
+                      <label className="mb-2 block text-xs tracking-[0.24em] text-[#C9A84C]">PHONE NUMBER</label>
+                      <input
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        className="w-full rounded-sm border border-white/10 bg-[#1A1A1A] px-4 py-3 text-[#F5F5F0] outline-none transition-all duration-300 ease-in-out placeholder:text-[#888880] focus:border-[#C9A84C]"
+                        placeholder="+34 ..."
+                      />
+                    </div>
+                  </div>
 
-              <div className="grid gap-6 md:grid-cols-2">
-                <div>
-                  <label className="mb-2 block text-xs tracking-[0.24em] text-[#C9A84C]">PREFERRED OFFICE</label>
-                  <select className="w-full rounded-sm border border-white/10 bg-[#1A1A1A] px-4 py-3 text-[#F5F5F0] outline-none transition-all duration-300 ease-in-out focus:border-[#C9A84C]">
-                    <option>Madrid</option>
-                    <option>Barcelona</option>
-                    <option>No Preference</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="mb-2 block text-xs tracking-[0.24em] text-[#C9A84C]">HOW DID YOU HEAR ABOUT US</label>
-                  <select className="w-full rounded-sm border border-white/10 bg-[#1A1A1A] px-4 py-3 text-[#F5F5F0] outline-none transition-all duration-300 ease-in-out focus:border-[#C9A84C]">
-                    <option>Google Search</option>
-                    <option>Referral</option>
-                    <option>LinkedIn</option>
-                    <option>Other</option>
-                  </select>
-                </div>
-              </div>
+                  <div>
+                    <label className="mb-2 block text-xs tracking-[0.24em] text-[#C9A84C]">AREA OF LAW</label>
+                    <select
+                      name="area"
+                      value={formData.area}
+                      onChange={handleChange}
+                      className="w-full rounded-sm border border-white/10 bg-[#1A1A1A] px-4 py-3 text-[#F5F5F0] outline-none transition-all duration-300 ease-in-out focus:border-[#C9A84C]"
+                    >
+                      <option>Select Area of Law</option>
+                      <option>Corporate Law</option>
+                      <option>Employment Law</option>
+                      <option>Real Estate Law</option>
+                      <option>Civil Litigation</option>
+                      <option>Family Law</option>
+                      <option>Immigration Law</option>
+                      <option>Other Matter</option>
+                    </select>
+                  </div>
 
-              <div>
-                <label className="mb-2 block text-xs tracking-[0.24em] text-[#C9A84C]">MESSAGE</label>
-                <textarea
-                  rows={5}
-                  className="w-full rounded-sm border border-white/10 bg-[#1A1A1A] px-4 py-3 text-[#F5F5F0] outline-none transition-all duration-300 ease-in-out placeholder:text-[#888880] focus:border-[#C9A84C]"
-                  placeholder="Please describe your legal matter in as much detail as you are comfortable sharing. All information is strictly confidential."
-                />
-              </div>
+                  <div className="grid gap-6 md:grid-cols-2">
+                    <div>
+                      <label className="mb-2 block text-xs tracking-[0.24em] text-[#C9A84C]">PREFERRED OFFICE</label>
+                      <select
+                        name="office"
+                        value={formData.office}
+                        onChange={handleChange}
+                        className="w-full rounded-sm border border-white/10 bg-[#1A1A1A] px-4 py-3 text-[#F5F5F0] outline-none transition-all duration-300 ease-in-out focus:border-[#C9A84C]"
+                      >
+                        <option>Madrid</option>
+                        <option>Barcelona</option>
+                        <option>No Preference</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="mb-2 block text-xs tracking-[0.24em] text-[#C9A84C]">HOW DID YOU HEAR ABOUT US</label>
+                      <select
+                        name="source"
+                        value={formData.source}
+                        onChange={handleChange}
+                        className="w-full rounded-sm border border-white/10 bg-[#1A1A1A] px-4 py-3 text-[#F5F5F0] outline-none transition-all duration-300 ease-in-out focus:border-[#C9A84C]"
+                      >
+                        <option>Google Search</option>
+                        <option>Referral</option>
+                        <option>LinkedIn</option>
+                        <option>Other</option>
+                      </select>
+                    </div>
+                  </div>
 
-              <label className="flex items-start gap-3 text-sm text-[#888880]">
-                <input type="checkbox" className="mt-1 h-4 w-4 rounded-sm border border-white/20 bg-[#1A1A1A]" />
-                <span>
-                  I confirm that I have read and agree to the Privacy Policy and consent to Lexara Law contacting me
-                  regarding my enquiry.
-                </span>
-              </label>
+                  <div>
+                    <label className="mb-2 block text-xs tracking-[0.24em] text-[#C9A84C]">MESSAGE</label>
+                    <textarea
+                      rows={5}
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      className="w-full rounded-sm border border-white/10 bg-[#1A1A1A] px-4 py-3 text-[#F5F5F0] outline-none transition-all duration-300 ease-in-out placeholder:text-[#888880] focus:border-[#C9A84C]"
+                      placeholder="Please describe your legal matter in as much detail as you are comfortable sharing. All information is strictly confidential."
+                    />
+                  </div>
 
-              <button
-                type="submit"
-                className="inline-flex w-full items-center justify-center gap-2 bg-[#C9A84C] px-6 py-3 text-sm tracking-[0.15em] text-black transition-all duration-300 ease-in-out hover:bg-[#b6953f]"
-              >
-                Send Enquiry
-                <ArrowRight className="h-4 w-4" />
-              </button>
-            </form>
+                  <label className="flex items-start gap-3 text-sm text-[#888880]">
+                    <input
+                      type="checkbox"
+                      name="consent"
+                      checked={formData.consent}
+                      onChange={handleCheckboxChange}
+                      className="mt-1 h-4 w-4 rounded-sm border border-white/20 bg-[#1A1A1A]"
+                    />
+                    <span>
+                      I confirm that I have read and agree to the Privacy Policy and consent to Lexara Law contacting me
+                      regarding my enquiry.
+                    </span>
+                  </label>
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="inline-flex w-full items-center justify-center gap-2 bg-[#C9A84C] px-6 py-3 text-sm tracking-[0.15em] text-black transition-all duration-300 ease-in-out hover:bg-[#b6953f] disabled:cursor-not-allowed disabled:opacity-80"
+                  >
+                    {isSubmitting ? "Sending..." : "Send Enquiry"}
+                    {!isSubmitting && <ArrowRight className="h-4 w-4" />}
+                  </button>
+                </form>
+              </>
+            )}
           </section>
         </div>
       </section>
