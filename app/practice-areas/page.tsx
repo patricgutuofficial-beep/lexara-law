@@ -221,12 +221,12 @@ export default function PracticeAreasPage() {
 
       <section className="sticky top-20 z-30 border-y border-white/10 bg-[#080808]/95 py-4 backdrop-blur-md">
         <div className="mx-auto w-full max-w-7xl px-6">
-          <div className="flex gap-6 overflow-x-auto whitespace-nowrap">
+          <div className="flex gap-2 overflow-x-auto whitespace-nowrap scroll-smooth [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {practiceAreas.map((area) => (
               <a
                 key={area.id}
                 href={`#${area.id}`}
-                className={`border-b pb-2 text-sm tracking-[0.14em] transition-all duration-300 ease-in-out ${
+                className={`shrink-0 border-b-2 px-4 py-2 text-sm tracking-[0.14em] transition-all duration-300 ease-in-out ${
                   activeId === area.id
                     ? "border-[#C9A84C] text-[#C9A84C]"
                     : "border-transparent text-[#888880] hover:border-[#C9A84C]/50 hover:text-[#C9A84C]"
