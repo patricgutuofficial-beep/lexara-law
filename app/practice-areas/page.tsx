@@ -162,7 +162,7 @@ function AreaIcon({ id }: { id: string }) {
 }
 
 export default function PracticeAreasPage() {
-  const [activeId, setActiveId] = useState(practiceAreas[0].id)
+  const [activeId, setActiveId] = useState("corporate")
 
   const ids = useMemo(() => practiceAreas.map((item) => item.id), [])
 
@@ -185,6 +185,12 @@ export default function PracticeAreasPage() {
 
     return () => observer.disconnect()
   }, [ids])
+
+  const handleTabClick = (id: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault()
+    setActiveId(id)
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" })
+  }
 
   return (
     <main className="bg-[#080808]">
@@ -226,6 +232,7 @@ export default function PracticeAreasPage() {
               <a
                 key={area.id}
                 href={`#${area.id}`}
+                onClick={handleTabClick(area.id)}
                 className={`shrink-0 border-b-2 px-4 py-2 text-sm tracking-[0.14em] transition-all duration-300 ease-in-out ${
                   activeId === area.id
                     ? "border-[#C9A84C] text-[#C9A84C]"
