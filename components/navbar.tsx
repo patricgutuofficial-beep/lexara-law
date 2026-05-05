@@ -3,17 +3,21 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { useLanguage } from "@/lib/language-context"
+import { translations } from "@/lib/translations"
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [hash, setHash] = useState("")
   const pathname = usePathname()
+  const { lang, toggleLanguage } = useLanguage()
+  const t = translations[lang]
 
   const navLinks = [
-    { href: "/practice-areas", label: "PRACTICE AREAS", match: "/practice-areas" },
-    { href: "/about", label: "ABOUT", match: "/about" },
-    { href: "/about#team", label: "TEAM", match: "/about" },
-    { href: "/contact", label: "CONTACT", match: "/contact" },
+    { href: "/practice-areas", label: t.nav.practiceAreas.toUpperCase(), match: "/practice-areas" },
+    { href: "/about", label: t.nav.about.toUpperCase(), match: "/about" },
+    { href: "/about#team", label: t.nav.team.toUpperCase(), match: "/about" },
+    { href: "/contact", label: t.nav.contact.toUpperCase(), match: "/contact" },
   ]
 
   useEffect(() => {
@@ -59,11 +63,18 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
+            <span className="h-5 w-px bg-[#C9A84C]/50" />
+            <button
+              onClick={toggleLanguage}
+              className="text-xs tracking-[0.15em] text-[#C9A84C] transition-all duration-300 ease-in-out hover:opacity-80"
+            >
+              {lang === "en" ? "ES" : "EN"}
+            </button>
             <Link
               href="/contact"
               className="ml-4 border border-[#C9A84C] bg-[#C9A84C] px-6 py-2.5 text-xs tracking-[0.15em] text-black transition-all duration-300 ease-in-out hover:bg-[#b6953f]"
             >
-              BOOK CONSULTATION
+              {t.nav.bookConsultation.toUpperCase()}
             </Link>
           </div>
 
@@ -120,8 +131,17 @@ export function Navbar() {
               className="mt-4 w-fit border border-[#C9A84C] bg-[#C9A84C] px-6 py-2.5 text-xs tracking-[0.15em] text-black transition-all duration-300 ease-in-out hover:bg-[#b6953f]"
               onClick={() => setIsMenuOpen(false)}
             >
-              BOOK CONSULTATION
+              {t.nav.bookConsultation.toUpperCase()}
             </Link>
+            <button
+              onClick={() => {
+                toggleLanguage()
+                setIsMenuOpen(false)
+              }}
+              className="w-fit text-xs tracking-[0.15em] text-[#C9A84C] transition-all duration-300 ease-in-out hover:opacity-80"
+            >
+              {lang === "en" ? "ES" : "EN"}
+            </button>
           </div>
         </div>
       </div>

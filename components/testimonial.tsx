@@ -1,4 +1,11 @@
+"use client"
+
+import { useLanguage } from "@/lib/language-context"
+import { translations } from "@/lib/translations"
+
 export function Testimonial() {
+  const { lang } = useLanguage()
+  const t = translations[lang]
   return (
     <section className="py-24 px-6 lg:px-8 bg-secondary">
       <div className="mx-auto max-w-4xl text-center">
@@ -9,14 +16,12 @@ export function Testimonial() {
         
         {/* Quote */}
         <blockquote className="font-serif text-xl sm:text-2xl lg:text-3xl font-light text-foreground leading-relaxed italic">
-          Lexara Law guided us through the most complex acquisition in our company&apos;s history 
-          with precision and unwavering dedication. Their expertise was invaluable.
+          {t.home.testimonialQuote}
         </blockquote>
         
         {/* Attribution */}
         <div className="mt-10">
-          <p className="text-foreground font-medium">Javier Martínez</p>
-          <p className="text-sm text-muted-foreground mt-1">CEO, Iberian Holdings Group</p>
+          <p className="text-sm text-muted-foreground mt-1">{t.home.testimonialAuthor}</p>
         </div>
       </div>
     </section>

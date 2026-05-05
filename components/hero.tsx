@@ -1,6 +1,13 @@
+"use client"
+
 import Link from "next/link"
+import { useLanguage } from "@/lib/language-context"
+import { translations } from "@/lib/translations"
 
 export function Hero() {
+  const { lang } = useLanguage()
+  const t = translations[lang]
+  const headlineParts = t.home.heroHeadline.split(" ")
   return (
     <section className="relative min-h-screen flex items-center px-6 lg:px-8 pt-20">
       <div className="mx-auto max-w-7xl w-full">
@@ -8,11 +15,13 @@ export function Hero() {
           {/* Left side - Text content */}
           <div>
             <h1 className="font-serif text-4xl font-light tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl leading-[1.1]">
-              <span className="block">Where Precision</span>
-              <span className="block mt-2">Meets <span className="text-[#C9A84C]">Justice.</span></span>
+              <span className="block">{headlineParts.slice(0, 2).join(" ")}</span>
+              <span className="block mt-2">
+                {headlineParts.slice(2, -1).join(" ")} <span className="text-[#C9A84C]">{headlineParts.at(-1)}</span>
+              </span>
             </h1>
             <p className="mt-8 text-lg leading-relaxed text-muted-foreground max-w-xl">
-              For over two decades, we have delivered exceptional legal outcomes for clients who demand nothing less than excellence.
+              {t.home.heroSub}
             </p>
             
             {/* CTA Buttons */}
@@ -21,23 +30,23 @@ export function Hero() {
                 href="#contact"
                 className="inline-block bg-[#C9A84C] px-8 py-4 text-sm tracking-[0.1em] font-medium text-black transition-all hover:bg-[#b6953f]"
               >
-                SCHEDULE A CONSULTATION
+                {t.home.scheduleBtn.toUpperCase()}
               </Link>
               <Link
                 href="#practice-areas"
                 className="inline-block border border-foreground/30 px-8 py-4 text-sm tracking-[0.1em] font-medium text-foreground transition-all hover:border-foreground hover:bg-foreground/5"
               >
-                OUR PRACTICE AREAS
+                {t.home.practiceAreasBtn.toUpperCase()}
               </Link>
             </div>
 
             {/* Trust Stats */}
             <div className="mt-12 flex items-center gap-6 text-sm text-muted-foreground">
-              <span className="tracking-wide">25+ Years</span>
+              <span className="tracking-wide">{t.home.stat1}</span>
               <span className="h-4 w-px bg-border" />
-              <span className="tracking-wide">300+ Cases</span>
+              <span className="tracking-wide">{t.home.stat2}</span>
               <span className="h-4 w-px bg-border" />
-              <span className="tracking-wide">4 Languages</span>
+              <span className="tracking-wide">{t.home.stat3}</span>
             </div>
           </div>
 

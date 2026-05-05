@@ -1,55 +1,26 @@
 "use client"
 
 import { ArrowRight } from "lucide-react"
-
-const practiceAreas = [
-  {
-    number: "01",
-    title: "Corporate Law",
-    description: "Strategic counsel for mergers, acquisitions, and governance.",
-  },
-  {
-    number: "02",
-    title: "Employment Law",
-    description: "Protecting rights through expert workplace legal guidance.",
-  },
-  {
-    number: "03",
-    title: "Real Estate Law",
-    description: "Comprehensive support for property transactions and development.",
-  },
-  {
-    number: "04",
-    title: "Civil Litigation",
-    description: "Vigorous advocacy in complex disputes and commercial matters.",
-  },
-  {
-    number: "05",
-    title: "Family Law",
-    description: "Sensitive representation in divorce, custody, and estate matters.",
-  },
-  {
-    number: "06",
-    title: "Immigration Law",
-    description: "Expert guidance for visas, residency, and citizenship applications.",
-  },
-]
+import { useLanguage } from "@/lib/language-context"
+import { translations } from "@/lib/translations"
 
 export function PracticeAreas() {
+  const { lang } = useLanguage()
+  const t = translations[lang]
   return (
     <section id="practice-areas" className="py-24 px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <p className="text-xs tracking-[0.3em] text-[#C9A84C] mb-4">PRACTICE AREAS</p>
+          <p className="text-xs tracking-[0.3em] text-[#C9A84C] mb-4">{t.home.practiceAreasLabel.toUpperCase()}</p>
           <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-light text-foreground">
-            Comprehensive Legal Services
+            {t.home.practiceAreasHeading}
           </h2>
         </div>
 
         {/* Cards Grid */}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {practiceAreas.map((area) => (
+          {t.home.services.map((area) => (
             <div
               key={area.number}
               className="group relative bg-card hover:bg-[#1A1A1A] border border-border p-8 transition-all duration-300 cursor-pointer overflow-hidden"

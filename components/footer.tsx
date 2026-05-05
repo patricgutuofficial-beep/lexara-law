@@ -1,13 +1,19 @@
-import Link from "next/link"
+"use client"
 
-const quickLinks = [
-  { href: "/practice-areas", label: "Practice Areas" },
-  { href: "/about", label: "About Us" },
-  { href: "/about#team", label: "Our Team" },
-  { href: "/contact", label: "Contact" },
-]
+import Link from "next/link"
+import { useLanguage } from "@/lib/language-context"
+import { translations } from "@/lib/translations"
 
 export function Footer() {
+  const { lang } = useLanguage()
+  const t = translations[lang]
+  const quickLinks = [
+    { href: "/practice-areas", label: t.nav.practiceAreas },
+    { href: "/about", label: t.nav.about },
+    { href: "/about#team", label: t.nav.team },
+    { href: "/contact", label: t.nav.contact },
+  ]
+
   return (
     <footer className="border-t border-white/10 bg-[#080808] px-6 py-16 lg:py-20">
       <div className="mx-auto max-w-7xl">
@@ -25,7 +31,7 @@ export function Footer() {
               </span>
             </Link>
             <p className="max-w-xs text-sm leading-relaxed text-[#888880]">
-              Excellence in legal counsel. Protecting what matters most since 2001.
+              {t.home.footerTagline}
             </p>
           </div>
 
@@ -47,7 +53,7 @@ export function Footer() {
 
           {/* Contact Details */}
           <div>
-            <h4 className="mb-6 text-xs tracking-[0.2em] text-[#F5F5F0]">CONTACT</h4>
+            <h4 className="mb-6 text-xs tracking-[0.2em] text-[#F5F5F0]">{t.nav.contact.toUpperCase()}</h4>
             <div className="flex flex-col gap-3 text-sm text-[#888880]">
               <p>Calle Serrano 50, 4th Floor</p>
               <p>28001 Madrid, Spain</p>
@@ -60,7 +66,7 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-white/10 pt-8">
           <p className="text-center text-xs text-[#888880]">
-            © {new Date().getFullYear()} Lexara Law. All rights reserved.
+            {t.home.copyright}
           </p>
         </div>
       </div>

@@ -1,16 +1,12 @@
 "use client"
 
-export function Marquee() {
-  const items = [
-    "Corporate Law",
-    "Employment Law",
-    "Real Estate",
-    "Civil Litigation",
-    "Family Law",
-    "Immigration",
-  ]
+import { useLanguage } from "@/lib/language-context"
+import { translations } from "@/lib/translations"
 
-  const marqueeContent = items.join("  ·  ") + "  ·  "
+export function Marquee() {
+  const { lang } = useLanguage()
+  const t = translations[lang]
+  const marqueeContent = t.home.marquee
 
   return (
     <div className="bg-[#C9A84C] py-3 overflow-hidden">

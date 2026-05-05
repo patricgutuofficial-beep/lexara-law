@@ -1,39 +1,25 @@
-const attorneys = [
-  {
-    initial: "MR",
-    name: "María Rodríguez",
-    title: "Managing Partner",
-    specialisation: "Corporate Law & M&A",
-  },
-  {
-    initial: "CR",
-    name: "Carlos Ruiz",
-    title: "Senior Partner",
-    specialisation: "Civil Litigation",
-  },
-  {
-    initial: "EG",
-    name: "Elena García",
-    title: "Partner",
-    specialisation: "Employment & Immigration",
-  },
-]
+"use client"
+
+import { useLanguage } from "@/lib/language-context"
+import { translations } from "@/lib/translations"
 
 export function TeamPreview() {
+  const { lang } = useLanguage()
+  const t = translations[lang]
   return (
     <section id="team" className="py-24 px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <p className="text-xs tracking-[0.3em] text-[#C9A84C] mb-4">OUR TEAM</p>
+          <p className="text-xs tracking-[0.3em] text-[#C9A84C] mb-4">{t.nav.team.toUpperCase()}</p>
           <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-light text-foreground">
-            Meet Our Attorneys
+            {t.home.meetTeam}
           </h2>
         </div>
 
         {/* Attorney Cards */}
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {attorneys.map((attorney) => (
+          {t.home.attorneys.map((attorney) => (
             <div
               key={attorney.name}
               className="group text-center p-8"
@@ -57,7 +43,7 @@ export function TeamPreview() {
               
               {/* Specialisation */}
               <p className="text-sm text-muted-foreground">
-                {attorney.specialisation}
+                {attorney.spec}
               </p>
             </div>
           ))}

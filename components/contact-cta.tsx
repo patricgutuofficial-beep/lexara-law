@@ -1,12 +1,18 @@
+"use client"
+
 import Link from "next/link"
+import { useLanguage } from "@/lib/language-context"
+import { translations } from "@/lib/translations"
 
 export function ContactCTA() {
+  const { lang } = useLanguage()
+  const t = translations[lang]
   return (
     <section id="contact" className="py-24 px-6 lg:px-8">
       <div className="mx-auto max-w-4xl text-center">
         {/* Heading */}
         <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-light text-foreground mb-8">
-          Ready to Protect Your Interests?
+          {t.home.ctaHeading}
         </h2>
         
         {/* Buttons */}
@@ -15,13 +21,13 @@ export function ContactCTA() {
             href="#"
             className="inline-block bg-[#C9A84C] px-8 py-4 text-sm tracking-[0.1em] font-medium text-black transition-all hover:bg-[#b6953f]"
           >
-            SCHEDULE CONSULTATION
+            {t.home.ctaBtn1.toUpperCase()}
           </Link>
           <Link
             href="tel:+34912345678"
             className="inline-block border border-foreground/30 px-8 py-4 text-sm tracking-[0.1em] font-medium text-foreground transition-all hover:border-foreground hover:bg-foreground/5"
           >
-            CALL US NOW
+            {t.home.ctaBtn2.toUpperCase()}
           </Link>
         </div>
         
