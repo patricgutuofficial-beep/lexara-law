@@ -66,7 +66,7 @@ export function Navbar() {
             <span className="h-5 w-px bg-[#C9A84C]/50" />
             <button
               onClick={toggleLanguage}
-              className="text-xs tracking-[0.15em] text-[#C9A84C] transition-all duration-300 ease-in-out hover:opacity-80"
+              className="text-xs tracking-[0.15em] text-[#F5F5F0] cursor-pointer transition-colors duration-200 hover:text-[#C9A84C]"
             >
               {lang === "en" ? "ES" : "EN"}
             </button>
@@ -138,7 +138,7 @@ export function Navbar() {
                 toggleLanguage()
                 setIsMenuOpen(false)
               }}
-              className="w-fit text-xs tracking-[0.15em] text-[#C9A84C] transition-all duration-300 ease-in-out hover:opacity-80"
+              className="w-fit text-xs tracking-[0.15em] text-[#F5F5F0] cursor-pointer transition-colors duration-200 hover:text-[#C9A84C]"
             >
               {lang === "en" ? "ES" : "EN"}
             </button>
