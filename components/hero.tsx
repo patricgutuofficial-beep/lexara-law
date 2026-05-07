@@ -9,12 +9,15 @@ export function Hero() {
   const t = translations[lang]
   const headlineParts = t.home.heroHeadline.split(" ")
   return (
-    <section className="relative min-h-screen flex items-center px-6 lg:px-8 pt-20">
+    <section className="relative min-h-screen flex items-center px-6 lg:px-8 pt-20 pb-20">
       <div className="mx-auto max-w-7xl w-full">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+   
+   
           {/* Left side - Text content */}
           <div>
-            <h1 className="font-serif text-4xl font-light tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl leading-[1.1]">
+            <h1 className="font-serif text-4xl font-light tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-6xl leading-[1.1]">
+       
               <span className="block">{headlineParts.slice(0, 2).join(" ")}</span>
               <span className="block mt-2">
                 {headlineParts.slice(2, -1).join(" ")} <span className="text-[#C9A84C]">{headlineParts.at(-1)}</span>
@@ -50,24 +53,36 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Right side - Decorative element */}
-          <div className="hidden lg:flex justify-end items-center">
-            <div className="relative">
-              {/* Vertical gold line */}
-              <div className="h-[400px] w-px bg-gradient-to-b from-transparent via-[#C9A84C] to-transparent" />
-              
-              {/* Roman numerals */}
-              <div className="absolute -left-12 top-1/2 -translate-y-1/2 flex flex-col gap-8 text-[#C9A84C]/50 font-serif text-sm tracking-widest">
-                <span>I</span>
-                <span>II</span>
-                <span>III</span>
-                <span>IV</span>
-                <span>V</span>
+          {/* Right side - Stats card */}
+          <div className="hidden lg:flex justify-end items-center self-center">
+     
+     
+     
+            <div className="relative w-full max-w-xl border border-white/10 bg-[#111111] p-8">
+       
+              <span className="pointer-events-none absolute -left-4 top-0 font-serif text-[10rem] leading-none text-[#C9A84C]/10">
+                L
+              </span>
+              <div className="relative space-y-8">
+                <p className="text-xs tracking-[0.3em] text-[#C9A84C]">EST. 1999</p>
+                <div className="h-px w-full bg-[#C9A84C]/30" />
+                <div className="space-y-1">
+                  <p className="font-serif text-5xl text-[#F5F5F0]">25+</p>
+                  <p className="text-sm tracking-[0.2em] text-[#888880]">{t.home.stat1}</p>
+                </div>
+                <div className="h-px w-full bg-[#C9A84C]/30" />
+                <div className="space-y-1">
+                  <p className="font-serif text-5xl text-[#F5F5F0]">300+</p>
+                  <p className="text-sm tracking-[0.2em] text-[#888880]">{t.home.stat2}</p>
+                </div>
+                <div className="h-px w-full bg-[#C9A84C]/30" />
+                <div className="space-y-1">
+                  <p className="font-serif text-5xl text-[#F5F5F0]">4</p>
+                  <p className="text-sm tracking-[0.2em] text-[#888880]">{t.home.stat3}</p>
+                </div>
+                <div className="h-px w-full bg-[#C9A84C]/30" />
+                <p className="text-xs tracking-[0.2em] text-[#888880]">MADRID · BARCELONA</p>
               </div>
-
-              {/* Geometric accent */}
-              <div className="absolute -right-8 top-1/4 w-16 h-16 border border-[#C9A84C] rotate-45" />
-              <div className="absolute -right-12 bottom-1/4 w-8 h-8 border border-[#C9A84C] rotate-45" />
             </div>
           </div>
         </div>
