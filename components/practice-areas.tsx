@@ -40,7 +40,7 @@ export function PracticeAreas() {
               
               {/* Description */}
               <p className="text-sm leading-relaxed text-muted-foreground">
-                {area.description}
+                {area.desc}
               </p>
               
               {/* Arrow */}

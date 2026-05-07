@@ -56,7 +56,10 @@ export default function PracticeAreasPage() {
   const handleTabClick = (id: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault()
     setActiveId(id)
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" })
+    const element = document.getElementById(id)
+    if (element) {
+      window.scrollTo({ top: element.getBoundingClientRect().top + window.scrollY - 100, behavior: "smooth" })
+    }
   }
 
   return (
