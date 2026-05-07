@@ -9,7 +9,7 @@ export function Hero() {
   const t = translations[lang]
   const headlineParts = t.home.heroHeadline.split(" ")
   return (
-    <section className="relative min-h-screen flex items-center px-6 lg:px-8 pt-20 pb-20">
+    <section className="relative min-h-[85vh] flex items-center px-6 lg:px-8 pt-24 pb-12">
       <div className="mx-auto max-w-7xl w-full">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
    
